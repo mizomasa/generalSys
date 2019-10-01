@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- テキストボックス -->
+<div layout:fragment="parts_input_text(field_id,item_name)">
+  <label for="*{__${field_id}__}" th:text="${item_name}"></label> <input
+    class="form-control" type="text" th:field="*{__${field_id}__}"
+    th:classappend="${#fields.hasErrors('{__${field_id}__}')} ? is-invalid" />
+  <div th:if="${#fields.hasErrors('{__${field_id}__}')}"
+    th:errors="*{__${field_id}__}" class="invalid-feedback"></div>
+</div>
+
+<!-- テキストボックス(readonly) -->
+<div layout:fragment="parts_input_text_readonly(field_id,item_name)">
+  <label class="" for="*{__${field_id}__}" th:text="${item_name}"></label>
+  <input readonly class="form-control" type="text"
+    th:field="*{__${field_id}__}" />
+</div>
+
+<!-- passwordボックス -->
+<div layout:fragment="parts_input_text_password(field_id,item_name)">
+  <label for="*{__${field_id}__}" th:text="${item_name}"></label> <input
+    class="form-control" type="password" th:field="*{__${field_id}__}"
+    th:classappend="${#fields.hasErrors('{__${field_id}__}')} ? is-invalid" />
+  <div th:if="${#fields.hasErrors('{__${field_id}__}')}"
+    th:errors="*{__${field_id}__}" class="invalid-feedback"></div>
+</div>
+
+<!-- テキストエリア -->
+<div layout:fragment="parts_input_textarea(field_id,item_name)">
+  <label for="*{__${field_id}__}" th:text="${item_name}"></label>
+  <textarea class="form-control" type="text"
+    th:field="*{__${field_id}__}"
+    th:classappend="${#fields.hasErrors('{__${field_id}__}')} ? is-invalid"></textarea>
+  <div th:if="${#fields.hasErrors('{__${field_id}__}')}"
+    th:errors="*{__${field_id}__}" class="invalid-feedback"></div>
+</div>
+
+<!-- チェックボックス -->
+<div layout:fragment="parts_input_checkbox(field_id,item_name)">
+  <label for="*{__${field_id}__}" th:text="${item_name}"></label> <input
+    class="form-control" type="checkbox" th:checked="*{__${field_id}__}"
+    th:classappend="${#fields.hasErrors('{__${field_id}__}')} ? is-invalid" />
+  <div th:if="${#fields.hasErrors('{__${field_id}__}')}"
+    th:errors="*{__${field_id}__}" class="invalid-feedback"></div>
+</div>
+</html>

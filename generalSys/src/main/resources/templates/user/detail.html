@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/layout">
+
+<div layout:fragment="contents">
+  <div class="container">
+    <h1>ゆーざ更新</h1>
+    <div layout:replace="parts/message :: summaryMessage"></div>
+    <a class="btn btn-link" href="/users">戻る</a>
+
+    <div class="float-right row">
+      <form th:action="@{/users/{userId}(userId=*{userId})}"
+        th:method="delete" th:object="${user}">
+        <button class="btn btn-danger " type="submit">削除</button>
+      </form>
+    </div>
+
+    <form th:action="@{/users/{userId}(userId=*{userId})}" th:method="put"
+      th:object="${user}">
+
+      <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <div
+            layout:replace="parts/formInput :: parts_input_text_readonly('userId','ユーザID')"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-4 mb-4">
+          <div
+            layout:replace="parts/formInput :: parts_input_text_password('password','パスワード')"></div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div
+            layout:replace="parts/formInput :: parts_input_text_password('passwordConfirm','パスワード(確認用)')"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-4 mb-4">
+          <div
+            layout:replace="parts/formInput :: parts_input_text('lastName','姓')"></div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div
+            layout:replace="parts/formInput :: parts_input_text('firstName','名')"></div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-12 mb-12">
+          <div
+            layout:replace="parts/formInput :: parts_input_textarea('remark','メモ')"></div>
+
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-1 mb-1">
+          <div
+            layout:replace="parts/formInput :: parts_input_checkbox('locked','ロック')"></div>
+
+        </div>
+        <div class="col-md-1 mb-1">
+          <div
+            layout:replace="parts/formInput :: parts_input_checkbox('locked','削除')"></div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <div
+            layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateDate','最終更新日')"></div>
+
+        </div>
+        <div class="col-md-3 mb-3">
+          <div
+            layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateUser','最終更新者')"></div>
+        </div>
+      </div>
+
+      <div layout:replace="parts/formButton :: parts_update_button"></div>
+
+    </form>
+  </div>
+</div>
+</html>
