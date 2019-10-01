@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!--出力ルール～コンソール～ -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <!--出力内容 -->
+            <pattern>%d{yyyy/MM/dd HH:mm:ss} %-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+  <appender name="PERFORMANCE_LOG_FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${app.log.dir:-log}/gw-lib_performance.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${app.log.dir:-log}/performance-%d{yyyyMMdd}.log
+      </fileNamePattern>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <charset>UTF-8</charset>
+      <pattern><![CDATA[%d{yyyy-MM-dd HH:mm:ss.SSS}\t%msg%n]]></pattern>
+    </encoder>
+  </appender>
+
+  <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+      <dataSource class="org.apache.commons.dbcp2.BasicDataSource">
+        <driverClassName>org.h2.Driver</driverClassName>
+        <url>jdbc:h2:./h2db/sampledb</url>
+        <username>username</username>
+        <password>password</password>
+      </dataSource>
+    </connectionSource>
+  </appender>
+  <root level="INFO">
+      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="DB"/>
+  </root>
+</configuration>

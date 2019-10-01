@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layouts/layout}">
+<head>
+<title>システムマスタ</title>
+</head>
+<body>
+
+<div layout:decorator="layout">
+  <div class="container" layout:fragment="contents">
+    <h1>ロールリスト</h1>
+    <!-- 検索条件 start -->
+    <div class="card">
+      <h5 class="card-header">検索条件</h5>
+        <!--  form th:action=@{/role} th:method="get"  th:object="${searchCondition}">
+            <div class="card-body">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">ロールID</label>
+                <div class="row col-md-4">
+                  <input class="form-control" type="text" th:field="*{id}" />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label">名称</label>
+                <div class="row col-md-4">
+                  <input class="form-control" type="text" th:field="*{name}" />
+                </div>
+              </div>
+
+            </div>
+            <div class="card-footer col-xs-offset-8">
+                <button class="btn btn-primary" type="submit">検索</button>
+                <button class="btn" type="reset" >クリア</button>
+            </div>
+        </form -->
+     </div>
+    <!-- 検索条件 end -->
+    <hr>
+    <!--   div class="float-right">
+        <div class=" justify-content-center">
+          <span th:text="${page.number+1}"></span><span>/</span>
+          <span th:text="${page.totalPages}"></span>
+           <span>頁を表示</span>
+        </div>
+    </div-->
+    <table class="table table-striped table-hover table-bordered ">
+       <thead class="thead-light ">
+        <tr>
+          <th>timestap</th>
+          <th>level</th>
+          <th>クラス名</th>
+          <th>メソッド名</th>
+          <th>行数</th>
+          <th>メッセージ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="logging:${loggings}" th:object="${logging}">
+          <td th:text="*{timestmp}" />
+          <td th:text="*{level}" />
+          <td th:text="*{className}" />
+          <td th:text="*{methodName}" />
+          <td th:text="*{line}" />
+          <td th:text="*{message}" />
+        </tr>
+      </tbody>
+    </table>
+    <!-- ページング処理 start-->
+     <!--   div th:object="${searchCondition}">
+      <nav aria-label="Page navigation ">
+    　　<ul class="pagination justify-content-center">
+         <li class="page-item" th:classappend="${page.first} ? disabled">
+           <a class="page-link" th:href="@{${url}(page=0,id=*{id},name=*{name})}">先頭へ</a>
+         </li>
+
+          <li class="page-item" th:classappend="${i}==${page.number} ? active"
+              th:each='i : ${#numbers.sequence(0, page.totalPages-1)}'
+              aria-current="page">
+
+            <a th:if="${i}!=${page.number}"  class="page-link"
+              th:href="@{${url}(page=${i},id=*{id},name=*{name})}">
+               <span th:text='${i+1}' >
+               </span>
+            </a>
+
+            <span class="page-link" th:if="${i}==${page.number}" >
+               <span th:text='${i+1}' >
+                  <span class="sr-only">(現位置)</span>
+               </span>
+            </span>
+
+          </li>
+         <li class="page-item" th:classappend="${page.last} ? disabled">
+           <a class="page-link" th:href="@{${url}(page=(${page.totalPages}-1),id=*{id},name=*{name})}">末尾へ</a>
+         </li>
+        </ul>
+      </nav>
+      </div -->
+    <!-- ページング処理 end -->
+
+  </div>
+</div>
+</body>
+</html>
