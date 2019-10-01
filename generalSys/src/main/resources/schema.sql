@@ -1,5 +1,5 @@
 /*M_USER*/
-create table if not exists m_user(
+create table if not exists t_user(
     user_id varchar(100) ,
     password varchar(100),
     first_name varchar(100),

@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class M_User {
+public class T_User {
     @Id
     private String userId;
     private String password;

@@ -1,5 +1,5 @@
-delete from m_user;
-insert into m_user(
+delete from t_user;
+insert into t_user(
     user_id ,password ,
     first_name,last_name,
     deleted,locked,
