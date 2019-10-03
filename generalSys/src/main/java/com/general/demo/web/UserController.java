@@ -1,6 +1,8 @@
 package com.general.demo.web;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.general.demo.domain.model.User;
+import com.general.demo.domain.model.system.Role;
+import com.general.demo.domain.service.RoleService;
 import com.general.demo.domain.service.UserService;
 import com.general.demo.ex.BusinessException;
 
@@ -25,6 +29,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping()
     public String index(Model model) {
@@ -44,6 +51,7 @@ public class UserController {
         try {
             User user = userService.findByUserId(userId);
             model.addAttribute("user",user);
+            model.addAttribute("roles",createRoleCheckBoxes());
         } catch (Exception e) {
             model.addAttribute("ErrorMessage", e.getMessage());
         }
@@ -57,8 +65,9 @@ public class UserController {
      */
     @GetMapping(value = "new")
     public String  newUser(Model model) {
-        User user = new User(null);
+        User user = new User();
         model.addAttribute("user",user);
+        model.addAttribute("roles",createRoleCheckBoxes());
         return "user/new";
     }
 
@@ -71,6 +80,7 @@ public class UserController {
     public String  post(@Validated @ModelAttribute User user,
             BindingResult resul,
             Model model) {
+        model.addAttribute("roles",createRoleCheckBoxes());
         if(resul.hasErrors()) {
             model.addAttribute("errorMessage", "入力チェックエラー");
             return "user/new";
@@ -97,6 +107,7 @@ public class UserController {
             @Validated @ModelAttribute User user,
             BindingResult resul,
             Model model) {
+        model.addAttribute("roles",createRoleCheckBoxes());
         if(resul.hasErrors()) {
             model.addAttribute("errorMessage","入力チェックエラー。");
             return "user/detail";
@@ -127,5 +138,14 @@ public class UserController {
             model.addAttribute("errorMessage", e.getMessage());
         }
         return "user/list";
+    }
+
+    private Map<String, String> createRoleCheckBoxes() {
+        List<Role> roles = roleService.findAll();
+        Map<String, String> checkBoxes =
+                roles.stream().collect(
+                        Collectors.toMap(Role :: getRoleId,
+                                role -> role.getName()));
+        return checkBoxes;
     }
 }

@@ -8,79 +8,128 @@
   <div class="container">
     <h1>ゆーざ更新</h1>
     <div layout:replace="parts/message :: summaryMessage"></div>
-    <a class="btn btn-link" href="/users">戻る</a>
-
-    <div class="float-right row">
-      <form th:action="@{/users/{userId}(userId=*{userId})}"
-        th:method="delete" th:object="${user}">
-        <button class="btn btn-danger " type="submit">削除</button>
-      </form>
-    </div>
 
     <form th:action="@{/users/{userId}(userId=*{userId})}" th:method="put"
       th:object="${user}">
-
-      <div class="form-row">
-        <div class="col-md-3 mb-3">
-          <div
-            layout:replace="parts/formInput :: parts_input_text_readonly('userId','ユーザID')"></div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="col-md-4 mb-4">
-          <div
-            layout:replace="parts/formInput :: parts_input_text_password('password','パスワード')"></div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div
-            layout:replace="parts/formInput :: parts_input_text_password('passwordConfirm','パスワード(確認用)')"></div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="col-md-4 mb-4">
-          <div
-            layout:replace="parts/formInput :: parts_input_text('lastName','姓')"></div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div
-            layout:replace="parts/formInput :: parts_input_text('firstName','名')"></div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="col-md-12 mb-12">
-          <div
-            layout:replace="parts/formInput :: parts_input_textarea('remark','メモ')"></div>
+      <div class="row sticky-top" >
+        <div class="col-10 "></div>
+        <div class="col-2">
+          <div layout:replace="parts/formButton :: parts_update_button"></div>
+          <a class="btn btn-link" href="/users">戻る</a>
 
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="col-md-1 mb-1">
-          <div
-            layout:replace="parts/formInput :: parts_input_checkbox('locked','ロック')"></div>
+      <div class="card">
+        <div class="card-header">ユーザ情報</div>
+        <div class="card-body">
 
-        </div>
-        <div class="col-md-1 mb-1">
-          <div
-            layout:replace="parts/formInput :: parts_input_checkbox('locked','削除')"></div>
+          <div class="form-row">
+            <div class="col-md-3 mb-3">
+              <div
+                layout:replace="parts/formInput :: parts_input_text_readonly('userId','ユーザID')"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-4 mb-4">
+              <div
+                layout:replace="parts/formInput :: parts_input_text_password('password','パスワード')"></div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div
+                layout:replace="parts/formInput :: parts_input_text_password('passwordConfirm','パスワード(確認用)')"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-4 mb-4">
+              <div
+                layout:replace="parts/formInput :: parts_input_text('lastName','姓')"></div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div
+                layout:replace="parts/formInput :: parts_input_text('firstName','名')"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-12 mb-12">
+              <div
+                layout:replace="parts/formInput :: parts_input_textarea('remark','メモ')"></div>
+
+            </div>
+          </div>
         </div>
       </div>
-      <div class="form-row">
-        <div class="col-md-3 mb-3">
-          <div
-            layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateDate','最終更新日')"></div>
+      <br>
 
-        </div>
-        <div class="col-md-3 mb-3">
-          <div
-            layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateUser','最終更新者')"></div>
+      <div class="card">
+        <div class="card-header">ロール</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="custom-control custom-checkbox"
+              th:each="role : ${roles}">
+              <div class="col">
+                <input type="checkbox" class="custom-control"
+                  th:value="${role.key}" th:field="*{roles}" /> <label
+                  class="custom-control" th:for="${#ids.prev('roles')}"
+                  th:text="${role.value}"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <button type="button" class="btn btn-secondary">全選択</button>
+            <button type="button" class="btn btn-light">全解除</button>
+          </div>
         </div>
       </div>
+      <br>
+      <div class="card">
+        <div class="card-header">制御情報</div>
+        <div class="card-body">
 
-      <div layout:replace="parts/formButton :: parts_update_button"></div>
+          <div class="form-row">
+            <div class="col-md-1 mb-1">
+              <div
+                layout:replace="parts/formInput :: parts_input_checkbox('locked','ロック')"></div>
+
+            </div>
+            <div class="col-md-1 mb-1">
+              <div
+                layout:replace="parts/formInput :: parts_input_checkbox('locked','削除')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="card">
+        <div class="card-header">更新情報</div>
+        <div class="card-body">
+
+          <div class="form-row">
+            <div class="col-md-3 mb-3">
+              <div
+                layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateDate','最終更新日')"></div>
+
+            </div>
+            <div class="col-md-3 mb-3">
+              <div
+                layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateUser','最終更新者')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-11 "></div>
+        <div class="col-1 ">
+        <form th:action="@{/users/{userId}(userId=*{userId})}"
+          th:method="delete" th:object="${user}">
+          <button class="btn btn-danger " type="submit">削除</button>
+        </form>
+        </div>
+      </div>
 
     </form>
   </div>

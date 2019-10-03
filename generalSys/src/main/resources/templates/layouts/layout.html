@@ -21,9 +21,11 @@
   <div class="container-fluid">
     <div class="row"></div>
     <div layout:fragment="contents">コンテンツ</div>
-    <div class="row">
-      <div th:replace="layouts/footer :: common_footer"></div>
-    </div>
   </div>
+  <div class="row fixed-bottom">
+    <div layout:fragment="footer"></div>
+  </div>
+
+
 </body>
 </html>

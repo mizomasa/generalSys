@@ -1,13 +1,12 @@
 package com.general.demo.domain.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +18,7 @@ import com.general.demo.domain.model.User;
 import com.general.demo.domain.repos.TUserRepository;
 import com.general.demo.domain.repos.TUserRoleRepository;
 import com.general.demo.domain.repos.entity.T_User;
+import com.general.demo.domain.repos.entity.T_UserRole;
 import com.general.demo.domain.service.UserService;
 import com.general.demo.ex.BusinessException;
 
@@ -54,21 +54,35 @@ public class UserServiceImpl  implements UserService,UserDetailsService {
     @Transactional
     public User saveFor(User user) throws BusinessException {
         Optional<T_User> tUser = userRepository.findById(user.getUserId());
+
         if(user.isNew()) {
             if (tUser.isPresent())throw new BusinessException("既にそのユーザIDは、存在します。");
         }else {
             tUser.orElseThrow(()->new BusinessException("ユーザが削除されています。"));
-            //TODO:楽観ロックを実装
         }
+
         T_User regitUser = new T_User();
         BeanUtils.copyProperties(user,regitUser);
         user.encodePassword(PasswordEncoder);
-        
-        regitUser.setUpdateUser("test");
+
+        regitUser.setUpdateUser("TODO:ログインユーザにする");
+
+
         userRepository.save(regitUser);
         BeanUtils.copyProperties(regitUser, user);
+        List<T_UserRole> entities = new ArrayList<>();
+
+        Arrays.asList(user.getRoles())
+            .parallelStream()
+            .forEach(e-> entities.add(new T_UserRole(user.getUserId(),e)));
+
+        List<T_UserRole> list = userRoleRepository.findAllByUserId(user.getUserId());
+        userRoleRepository.deleteInBatch(list);
+        userRoleRepository.saveAll(entities);
+        userRoleRepository.flush();
         return user;
     }
+
 
     @Override
     @Transactional
@@ -81,16 +95,19 @@ public class UserServiceImpl  implements UserService,UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<T_User> tUser = userRepository.findById(username);
-        return tUser
+        User user= tUser
                 .map(u -> createUser(u, username))
                 .orElseThrow(()->new UsernameNotFoundException("user not found"));
+        return user;
     }
 
     private User createUser(T_User tUser, String username) {
-        List<String> userRoles = userRoleRepository.findAllByUserId(username);
-        String[] roles = userRoles.toArray(new String[userRoles.size()]);
-        List<GrantedAuthority> authorities  =AuthorityUtils.createAuthorityList(roles);
-        User user = new User(authorities);
+        List<T_UserRole> userRoles = userRoleRepository.findAllByUserId(username);
+
+        String[] roles = new String[userRoles.size()];
+        for(int i=0; i<roles.length; i++)
+            roles[i] = userRoles.get(i).getRoleId();
+        User user = new User(roles);
         BeanUtils.copyProperties(tUser,user);
         return user;
     }

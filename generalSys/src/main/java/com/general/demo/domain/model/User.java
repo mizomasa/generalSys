@@ -5,8 +5,10 @@ import java.util.Collection;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,9 +22,11 @@ public class User implements UserDetails{
     private String userId;
 
     @NotBlank
+    @Size(max = 50)
     private String firstName;
 
     @NotBlank
+    @Size(max = 50)
     private String lastName;
 
     @NotBlank
@@ -32,15 +36,22 @@ public class User implements UserDetails{
     private String passwordConfirm;
     private boolean locked;
     private boolean deleted;
+    private String[] roles;
 
+    @Size(max = 200)
     private String remark;
     private LocalDateTime lastUpdateDate;
     private String lastUpdateUser;
 
-    private final Collection<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities;
 
-    public User(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
+    public User() {
+
+    }
+
+    public User(String[] roles) {
+        this.roles=roles;
+        this.authorities = AuthorityUtils.createAuthorityList(roles);
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -10,3 +10,6 @@ spring:
       ddl-auto: validate
   thymeleaf:
     cache: false
+server:
+  port: 8081
+

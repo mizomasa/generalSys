@@ -4,15 +4,19 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity(name="t_user_role")
 @IdClass(T_UserRolePK.class)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class T_UserRole {
 
     @Id
-    public String userId;
+    private String userId;
     @Id
-    public String roleId;
+    private String roleId;
 }

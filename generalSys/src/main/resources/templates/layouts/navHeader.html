@@ -26,6 +26,8 @@
             class="dropdown-item" href="#">Something else here</a>
         </div></li>
     </ul>
+    <p sec:authorize="isAuthenticated()">
       <span sec:authentication="principal.username">未ログイン</span>
+    </p>
   </div>
 </nav>
