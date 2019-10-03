@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.Data;
 
@@ -36,49 +37,51 @@ public class User implements UserDetails{
     private LocalDateTime lastUpdateDate;
     private String lastUpdateUser;
 
-    @Override
+    private final Collection<? extends GrantedAuthority> authorities;
+
+    public User(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO 自動生成されたメソッド・スタブ
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        // TODO 自動生成されたメソッド・スタブ
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        // TODO 自動生成されたメソッド・スタブ
-        return null;
+        return this.userId;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO 自動生成されたメソッド・スタブ
-        return false;
+        return this.deleted;
     }
 
     public boolean isNew() {
         return lastUpdateDate == null;
+    }
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
     }
 }

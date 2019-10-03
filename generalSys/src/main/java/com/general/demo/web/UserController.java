@@ -28,8 +28,14 @@ public class UserController {
 
     @GetMapping()
     public String index(Model model) {
-        List<User> users = userService.findAll();
-        model.addAttribute("users",users);
+        List<User> users;
+        try {
+            users = userService.findAll();
+            model.addAttribute("users",users);
+
+        } catch (BusinessException e) {
+            model.addAttribute("errorMessage",e.getMessage());
+        }
         return "user/list";
     }
 
@@ -51,7 +57,7 @@ public class UserController {
      */
     @GetMapping(value = "new")
     public String  newUser(Model model) {
-        User user = new User();
+        User user = new User(null);
         model.addAttribute("user",user);
         return "user/new";
     }

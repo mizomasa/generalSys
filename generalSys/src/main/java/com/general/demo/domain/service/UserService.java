@@ -7,7 +7,7 @@ import com.general.demo.ex.BusinessException;
 
 public interface UserService {
 
-    List<User> findAll();
+    List<User> findAll() throws BusinessException;
     User findByUserId(String id) throws Exception;
     User saveFor(User user) throws BusinessException;
     void deleteByUserId(String id) throws BusinessException;
