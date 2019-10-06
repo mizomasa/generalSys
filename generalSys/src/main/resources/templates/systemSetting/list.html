@@ -6,29 +6,31 @@
 <div layout:fragment="contents">
   <div class="container">
     <div layout:replace="parts/message :: summaryMessage"></div>
-    <h1>Users List</h1>
+    <h1>SystemSetting List</h1>
     <div class="row">
       <div class="col-sm-12">
-        <a class="btn btn-light rounded-pill" href="/users/new">create
+        <a class="btn btn-light rounded-pill" href="/systemSetting/new">create
           new</a>
       </div>
     </div>
     <hr>
-
     <table class="table table-striped">
-      <thead>
+      <thead class="thead-light">
         <tr>
           <th>ID</th>
-          <th>ロック状態</th>
-          <th>最終更新日</th>
+          <th>sub id</th>
+          <th>名称</th>
+          <th>値</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="user:${users}" th:object="${user}">
-          <td><a th:text="*{userId}"
-            th:href="@{/users/{userId}(userId=*{userId})}"></a></td>
-          <td th:text="*{locked}"></td>
-          <td th:text="*{lastUpdateDate}"></td>
+        <tr th:each="system:${systems}" th:object="${system}">
+          <td><a th:text="*{id}"
+            th:href="@{/systemSetting/{id}/{subId}(id=*{id},subId=*{subId})}"></a>
+          </td>
+          <td th:text="*{subId}"></td>
+          <td th:text="*{name}"></td>
+          <td th:text="*{value}"></td>
         </tr>
       </tbody>
     </table>

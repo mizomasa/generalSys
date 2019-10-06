@@ -2,20 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- 新規登録用 -->
 <div layout:fragment="parts_regist_button">
-  <div class="form-group row">
-    <div class="">
-      <button type="submit" class="btn btn-primary btn-lg">新規登録</button>
-      <button type="reset" class="btn btn-info btn-lg">クリア</button>
-    </div>
-  </div>
+      <button type="submit" class="btn btn-outline-primary rounded-pill">新規登録</button>
+      <button type="reset" class="btn btn-outline-info rounded-pill">クリア</button>
 </div>
 <!-- 更新用 -->
 <div layout:fragment="parts_update_button">
-  <div class="form-group row">
-    <div class="">
-      <button type="submit" class="btn btn-primary btn-lg">更新</button>
-      <button type="reset" class="btn btn-info btn-lg">クリア</button>
+      <button type="submit" class="btn btn-outline-primary rounded-pill ">更新</button>
+      <button type="reset" class="btn btn-outline-info rounded-pill">クリア</button>
+</div>
+
+<!-- 戻る用 -->
+<div layout:fragment="parts_return_button(url)">
+     <a class="btn btn-outline-dark rounded-pill" th:href="${url}" role="button">戻る</a>
+</div>
+
+<!-- 削除 -->
+<div layout:fragment="parts_delete_button(action)">
+  <div class="row">
+    <div class="col-10 "></div>
+    <div class="col-2 text-right">
+    <form th:action="${action}" th:method="delete" >
+      <button class="btn btn-outline-danger rounded-pill" type="submit">削除</button>
+    </form>
     </div>
   </div>
 </div>
+
+
 </html>

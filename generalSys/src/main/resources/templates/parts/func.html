@@ -1,0 +1,33 @@
+<div layout:fragment="parts_func(url,icon,name)">
+
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link text-dark" th:href="${url}">
+        <img th:src="'/icon/svg/' + ${icon} +'.svg'" width="32" height="32">
+        <span th:text="${name}"></span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div layout:fragment="parts_func_group(url,icon,name,id,funcs)">
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link text-dark" th:href="${url}"
+      data-toggle="collapse" th:data-target="'#'+${id}"
+      aria-expanded="false" th:aria-controls="${id}">
+        <img th:src="'/icon/svg/' + ${icon} +'.svg'" width="32" height="32">
+        <span th:text="${name}"></span>
+        <img src="/icon/svg/chevron-down.svg" width="32" height="32">
+      </a>
+    </li>
+
+
+    <li class="nav-item collapse" th:id="${id}">
+      <ul th:each="f : ${funcs}">
+        <div layout:replace="parts/func :: parts_func(${f.url},${f.icon},${f.name})" >
+        </div>
+      </ul>
+    </li>
+  </ul>
+</div>

@@ -6,20 +6,23 @@
 
 <div layout:fragment="contents">
   <div class="container">
-    <h1>ゆーざ更新</h1>
-    <div layout:replace="parts/message :: summaryMessage"></div>
-
-    <form th:action="@{/users/{userId}(userId=*{userId})}" th:method="put"
-      th:object="${user}">
+    <h1>ユーザ情報</h1>
+    <form th:action="@{/users/{userId}(userId=*{userId})}" th:method="put" th:object="${user}">
       <div class="row sticky-top" >
-        <div class="col-10 "></div>
-        <div class="col-2">
+        <div class="col-9 text-left">
+          <div layout:replace="parts/formButton :: parts_return_button('/users')"></div>
+        </div>
+        <div class="col-3 text-right">
           <div layout:replace="parts/formButton :: parts_update_button"></div>
-          <a class="btn btn-link" href="/users">戻る</a>
-
         </div>
       </div>
-
+     <br>
+      <div class="row " >
+        <div class="col-12 ">
+            <div layout:replace="parts/message :: summaryMessage"></div>
+        </div>
+      </div>
+      <hr>
       <div class="card">
         <div class="card-header">ユーザ情報</div>
         <div class="card-body">
@@ -80,8 +83,8 @@
           </div>
 
           <div class="card-footer">
-            <button type="button" class="btn btn-secondary">全選択</button>
-            <button type="button" class="btn btn-light">全解除</button>
+            <button type="button" class="btn btn-secondary rounded-pill ">全選択</button>
+            <button type="button" class="btn btn-light rounded-pill ">全解除</button>
           </div>
         </div>
       </div>
@@ -104,33 +107,10 @@
         </div>
       </div>
       <br>
-      <div class="card">
-        <div class="card-header">更新情報</div>
-        <div class="card-body">
-
-          <div class="form-row">
-            <div class="col-md-3 mb-3">
-              <div
-                layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateDate','最終更新日')"></div>
-
-            </div>
-            <div class="col-md-3 mb-3">
-              <div
-                layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateUser','最終更新者')"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-11 "></div>
-        <div class="col-1 ">
-        <form th:action="@{/users/{userId}(userId=*{userId})}"
-          th:method="delete" th:object="${user}">
-          <button class="btn btn-danger " type="submit">削除</button>
-        </form>
-        </div>
-      </div>
-
+       <div layout:replace="parts/updateInfo :: parts_update_info"></div>
+      <hr>
+     <div
+       layout:replace="parts/formButton :: parts_delete_button('@{/users/{userId}(userId=*{userId})}')"></div>
     </form>
   </div>
 </div>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  layout:decrate="~{layouts/layout}"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/layout">
+
+<div layout:fragment="contents">
+  <div class="container">
+    <h1>System master setting</h1>
+    <div layout:replace="parts/message :: summaryMessage"></div>
+
+    <form th:action="@{/systemSetting/{id}/{subId}(id=*{id},subId=*{subId})}" th:method="put"
+      th:object="${system}">
+      <div class="row sticky-top" >
+        <div class="col-9 text-left">
+          <div layout:replace="parts/formButton :: parts_return_button('/systemSetting')"></div>
+        </div>
+        <div class="col-3 text-right">
+          <div layout:replace="parts/formButton :: parts_update_button"></div>
+        </div>
+      </div>
+  <hr>
+      <div class="card">
+        <div class="card-header">マスタ値</div>
+        <div class="card-body">
+
+          <div class="form-row">
+            <div class="col-md-4 mb-4">
+              <div layout:replace="parts/formInput :: parts_input_text_readonly('id','ID')"></div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div layout:replace="parts/formInput :: parts_input_text_readonly('subId','Sub ID')"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-4 mb-4">
+              <div layout:replace="parts/formInput :: parts_input_text('name','項目名')"></div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div layout:replace="parts/formInput :: parts_input_text('value','設定値')"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-12 mb-12">
+              <div
+                layout:replace="parts/formInput :: parts_input_textarea('remark','メモ')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <br>
+      <div layout:replace="parts/updateInfo :: parts_update_info"></div>
+     <div class="row">
+        <div class="col-11 "></div>
+        <div class="col-1 ">
+          <form th:action="@{/systemSetting/{id}/{subId}(id=*{id},subId=*{subId})}" th:method="delete">
+          <button class="btn btn-danger " type="submit">削除</button>
+        </form>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+</html>

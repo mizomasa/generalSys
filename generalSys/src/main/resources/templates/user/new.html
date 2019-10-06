@@ -6,17 +6,25 @@
 
 <div layout:fragment="contents">
   <div class="container">
-
-    <h1>新規登録</h1>
-    <div layout:replace="parts/message :: summaryMessage"></div>
-    <a class="btn btn-link" href="/users">戻る</a>
-
     <form th:action="@{/users/new}" th:method="post" th:object="${user}">
+      <div class="row sticky-top" >
+        <div class="col-9 text-left">
+          <div layout:replace="parts/formButton :: parts_return_button('/users')"></div>
+        </div>
+        <div class="col-3 text-right">
+          <div layout:replace="parts/formButton :: parts_regist_button"></div>
+        </div>
+      </div>
+     <br>
+      <div class="row " >
+        <div class="col-12 ">
+            <div layout:replace="parts/message :: summaryMessage"></div>
+        </div>
+      </div>
+      <hr>
       <div class="card">
         <div class="card-header">ユーザ情報</div>
         <div class="card-body">
-
-
 
           <div class="form-row">
             <div class="col-md-3 mb-3">
@@ -72,8 +80,8 @@
           </div>
 
           <div class="card-footer">
-            <button type="button" class="btn btn-secondary">全選択</button>
-            <button type="button" class="btn btn-light">全解除</button>
+            <button type="button" class="btn btn-secondary rounded-pill ">全選択</button>
+            <button type="button" class="btn btn-light rounded-pill ">全解除</button>
           </div>
         </div>
       </div>
@@ -95,8 +103,8 @@
           </div>
         </div>
       </div>
-      <div layout:replace="parts/formButton :: parts_regist_button"></div>
     </form>
     <br>
+    </div>
   </div>
 </html>

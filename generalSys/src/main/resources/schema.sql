@@ -22,7 +22,7 @@ create table if not exists t_user_role(
 
 );
 
-create table if not exists M_ROLE(
+create table if not exists m_role(
     role_id varchar(100) ,
     name varchar(100),
     description varchar(100),
@@ -30,3 +30,16 @@ create table if not exists M_ROLE(
     last_update_user varchar(100),
     PRIMARY KEY(role_id)
 );
+
+create table if not exists m_system(
+    id varchar(10),
+    sub_id varchar(100),
+    name varchar(100) ,
+    code varchar(100) ,
+    remark varchar(200) ,
+    last_update_date datetime,
+    last_update_user varchar(100),
+    PRIMARY KEY(id,sub_id)
+);
+
+

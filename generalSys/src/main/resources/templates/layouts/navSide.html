@@ -1,0 +1,12 @@
+<div layout:fragment="common_nav_side">
+  <div class="sidebar-sticky">
+    <div th:each="menu : ${menus}">
+      <div th:if="${menu.funcs.size()==0}">
+        <div layout:replace="parts/func :: parts_func(${menu.url},${menu.icon},${menu.name})"></div>
+      </div>
+      <div th:unless="${menu.funcs.size()==0}">
+        <div layout:replace="parts/func :: parts_func_group(${menu.url},${menu.icon},${menu.name},${menu.id},${menu.funcs})"></div>
+      </div>
+   </div>
+ </div>
+</div>

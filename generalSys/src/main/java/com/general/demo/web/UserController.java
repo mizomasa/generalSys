@@ -35,9 +35,8 @@ public class UserController {
 
     @GetMapping()
     public String index(Model model) {
-        List<User> users;
         try {
-            users = userService.findAll();
+            List<User> users = userService.findAll();
             model.addAttribute("users",users);
 
         } catch (BusinessException e) {
@@ -113,9 +112,8 @@ public class UserController {
             return "user/detail";
 
         }
-        User res;
         try {
-            res = userService.saveFor(user);
+            User res = userService.saveFor(user);
             model.addAttribute("user", res);
             model.addAttribute("successMessage","更新が完了しました。");
 

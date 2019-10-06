@@ -1,0 +1,19 @@
+<div layout:fragment="parts_update_info()">
+      <div class="card">
+        <div class="card-header">更新情報</div>
+        <div class="card-body">
+
+          <div class="form-row">
+            <div class="col-md-3 mb-3">
+              <div
+                layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateDate','最終更新日')"></div>
+
+            </div>
+            <div class="col-md-3 mb-3">
+              <div
+                layout:replace="parts/formInput :: parts_input_text_readonly('lastUpdateUser','最終更新者')"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>

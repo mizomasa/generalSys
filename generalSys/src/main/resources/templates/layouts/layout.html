@@ -16,16 +16,20 @@
 </head>
 
 <body>
-  <div th:replace="layouts/navHeader :: common_nav_header"></div>
+  <div layout:replace="layouts/navHeader :: common_nav_header"></div>
 
   <div class="container-fluid">
-    <div class="row"></div>
-    <div layout:fragment="contents">コンテンツ</div>
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div layout:replace="layouts/navSide :: common_nav_side"></div>
+      </nav>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px4">
+      <div layout:fragment="contents">コンテンツ</div>
+      </main>
+    </div>
   </div>
   <div class="row fixed-bottom">
     <div layout:fragment="footer"></div>
   </div>
-
-
 </body>
 </html>
